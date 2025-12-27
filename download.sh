@@ -70,11 +70,11 @@ download_file \
   "loras" \
   "Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors"
 
-echo "Downloading Lightx2v T2V LoRA (~2.4GB)..."
+echo "Downloading Lightx2v I2V 480p LoRA rank128 (~2.4GB)..."
 download_file \
-  "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Lightx2v/lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank128_bf16.safetensors?download=true" \
+  "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors?download=true" \
   "loras" \
-  "lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank128_bf16.safetensors"
+  "lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors"
 
 MODELS_FOLDER="diffusion_models/wan22_quantstack_a14b"
 
