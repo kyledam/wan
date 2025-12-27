@@ -18,7 +18,7 @@ fi
 # Auto-select option 3
 choice="3"
 
-cd /workspace/ComfyUI/models
+cd /workspace/ComfyUI/models || exit 1
 
 # Create folders
 mkdir -p diffusion_models text_encoders vae loras upscale_models
@@ -69,6 +69,12 @@ download_file \
   "https://huggingface.co/lightx2v/Wan2.1-I2V-14B-480P-StepDistill-CfgDistill-Lightx2v/resolve/main/loras/Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors?download=true" \
   "loras" \
   "Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors"
+
+echo "Downloading Lightx2v T2V LoRA (~2.4GB)..."
+download_file \
+  "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Lightx2v/lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank128_bf16.safetensors?download=true" \
+  "loras" \
+  "lightx2v_T2V_14B_cfg_step_distill_v2_lora_rank128_bf16.safetensors"
 
 MODELS_FOLDER="diffusion_models/wan22_quantstack_a14b"
 
@@ -253,23 +259,23 @@ echo "=========================================="
 
 echo ""
 echo "Diffusion Models:"
-ls -lh "$MODELS_FOLDER/"
+ls -lh "$MODELS_FOLDER/" 2>/dev/null || echo "Not found yet"
 
 echo ""
 echo "Text Encoders:"
-ls -lh text_encoders/
+ls -lh text_encoders/ 2>/dev/null || echo "Not found yet"
 
 echo ""
 echo "VAE:"
-ls -lh vae/
+ls -lh vae/ 2>/dev/null || echo "Not found yet"
 
 echo ""
 echo "LoRAs:"
-ls -lh loras/
+ls -lh loras/ 2>/dev/null || echo "Not found yet"
 
 echo ""
 echo "Upscale Models:"
-ls -lh upscale_models/
+ls -lh upscale_models/ 2>/dev/null || echo "Not found yet"
 
 echo ""
 echo "=========================================="
@@ -278,29 +284,6 @@ echo "=========================================="
 echo ""
 echo "Downloaded: QuantStack Official (A14B)"
 echo ""
-echo "Model Structure:"
-echo "ComfyUI/models/"
-echo "├── diffusion_models/wan22_quantstack_a14b/"
-echo "│   ├── Wan2.2-I2V-A14B-HighNoise-Q8_0.gguf (~13GB)"
-echo "│   └── Wan2.2-I2V-A14B-LowNoise-Q8_0.gguf (~13GB)"
-echo "├── text_encoders/"
-echo "│   └── umt5_xxl_fp8_e4m3fn_scaled.safetensors (~5GB)"
-echo "├── loras/"
-echo "│   ├── Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors (~1.2GB)"
-echo "│   ├── mql_casting_sex_spoon_wan22_i2v_v1_high_noise.safetensors"
-echo "│   ├── mql_casting_sex_spoon_wan22_i2v_v1_low_noise.safetensors"
-echo "│   ├── Blink_Squatting_Cowgirl_Position_I2V_HIGH.safetensors"
-echo "│   └── Blink_Squatting_Cowgirl_Position_I2V_LOW.safetensors"
-echo "├── vae/"
-echo "│   └── wan_2.1_vae.safetensors (~350MB)"
-echo "└── upscale_models/"
-echo "    └── RealESRGAN_x2.pth (~60MB)"
-echo ""
-echo "Workflow Settings:"
-echo "- Select models in 'wan22_quantstack_a14b' folder"
-echo "- Use Wan2.1 Lightning LoRA with strength: High=3.0, Low=1.5"
-echo ""
-echo "=========================================="
-echo "Total Size: ~32GB + Additional LoRAs: ~4GB"
-echo "Grand Total: ~36GB"
+echo "Total Size: ~32GB + Additional LoRAs: ~10GB"
+echo "Grand Total: ~42GB"
 echo "=========================================="
