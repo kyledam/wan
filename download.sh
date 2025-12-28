@@ -2,28 +2,27 @@
 
 echo "=========================================="
 echo "WAN 2.2 Models Download Script"
-echo "Auto-selecting QuantStack Official (A14B)"
+echo "Auto-installing Aria2 & Selecting QuantStack Official (A14B)"
 echo "=========================================="
 
-# Check if aria2c is installed, if not use wget
-if command -v aria2c &> /dev/null; then
-    DOWNLOADER="aria2c"
-    echo "Using aria2c (fast, parallel downloads)"
-else
-    DOWNLOADER="wget"
-    echo "aria2c not found, using wget (slower, sequential)"
-    echo "To install aria2c for faster downloads: apt install -y aria2"
-fi
+# 1. CÀI ĐẶT ARIA2 (Ép buộc)
+echo "Installing aria2..."
+apt-get update -qq && apt-get install -y aria2
 
-# Auto-select option 3
-choice="3"
+# Set downloader cố định là aria2c
+DOWNLOADER="aria2c"
 
-cd /workspace/ComfyUI/models || exit 1
+# 2. TẠO THƯ MỤC TRƯỚC KHI CD (Fix lỗi crash script)
+# -p giúp tạo cả đường dẫn cha nếu chưa có (ví dụ chưa có ComfyUI nó tự tạo luôn)
+mkdir -p /workspace/ComfyUI/models
 
-# Create folders
+# Giờ mới cd vào, nếu vẫn lỗi thì mới exit
+cd /workspace/ComfyUI/models || { echo "Khong the cd vao folder models!"; exit 1; }
+
+# Create folders con
 mkdir -p diffusion_models text_encoders vae loras upscale_models
 
-# Function to download with aria2c or wget
+# Function download chỉ dùng aria2c
 download_file() {
     local url="$1"
     local output_dir="$2"
@@ -31,11 +30,10 @@ download_file() {
     
     mkdir -p "$output_dir"
     
-    if [ "$DOWNLOADER" == "aria2c" ]; then
-        aria2c -x 16 -s 16 -k 1M -d "$output_dir" -o "$output_file" "$url" &
-    else
-        wget -c -O "$output_dir/$output_file" "$url" &
-    fi
+    # -x 16: 16 kết nối/server
+    # -s 16: chia file làm 16 phần
+    # -j 4: tải tối đa 4 file cùng lúc (để tránh nghẽn I/O)
+    aria2c -x 16 -s 16 -k 1M -d "$output_dir" -o "$output_file" "$url" &
 }
 
 echo ""
@@ -78,7 +76,7 @@ download_file \
 
 MODELS_FOLDER="diffusion_models/wan22_quantstack_a14b"
 
-# Common downloads for all options
+# Common downloads
 echo ""
 echo "=========================================="
 echo "Downloading Common Files"
@@ -96,159 +94,40 @@ download_file \
   "upscale_models" \
   "RealESRGAN_x2.pth"
 
-# Additional LoRAs from kyledam
+# Additional LoRAs
 echo ""
 echo "=========================================="
 echo "Downloading Additional LoRAs (kyledam)"
 echo "=========================================="
 
-echo "Downloading mql_casting_sex_spoon HIGH..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/mql_casting_sex_spoon_wan22_i2v_v1_high_noise.safetensors?download=true" \
-  "loras" \
-  "mql_casting_sex_spoon_wan22_i2v_v1_high_noise.safetensors"
+# --- List Lora cua may (Tao giu nguyen) ---
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/mql_casting_sex_spoon_wan22_i2v_v1_high_noise.safetensors?download=true" "loras" "mql_casting_sex_spoon_wan22_i2v_v1_high_noise.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/mql_casting_sex_spoon_wan22_i2v_v1_low_noise.safetensors?download=true" "loras" "mql_casting_sex_spoon_wan22_i2v_v1_low_noise.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/Blink_Squatting_Cowgirl_Position_I2V_HIGH.safetensors?download=true" "loras" "Blink_Squatting_Cowgirl_Position_I2V_HIGH.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/Blink_Squatting_Cowgirl_Position_I2V_LOW.safetensors?download=true" "loras" "Blink_Squatting_Cowgirl_Position_I2V_LOW.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/genitals_helper_v1.0_e219.safetensors?download=true" "loras" "genitals_helper_v1.0_e219.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/DR34ML4Y_I2V_14B_HIGH.safetensors?download=true" "loras" "DR34ML4Y_I2V_14B_HIGH.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/DR34ML4Y_I2V_14B_LOW.safetensors?download=true" "loras" "DR34ML4Y_I2V_14B_LOW.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/WAN-2.2-I2V-Orgasm-HIGH-v1.safetensors?download=true" "loras" "WAN-2.2-I2V-Orgasm-HIGH-v1.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/WAN-2.2-I2V-Orgasm-LOW-v1.safetensors?download=true" "loras" "WAN-2.2-I2V-Orgasm-LOW-v1.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Back_Doggystyle_HIGH.safetensors?download=true" "loras" "iGoon_-_Blink_Back_Doggystyle_HIGH.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Back_Doggystyle_LOW.safetensors?download=true" "loras" "iGoon_-_Blink_Back_Doggystyle_LOW.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGOON_Blink_Blowjob_I2V_HIGH.safetensors?download=true" "loras" "iGOON_Blink_Blowjob_I2V_HIGH.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGOON_Blink_Blowjob_I2V_LOW.safetensors?download=true" "loras" "iGOON_Blink_Blowjob_I2V_LOW.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Facial_I2V_HIGH.safetensors?download=true" "loras" "iGoon_-_Blink_Facial_I2V_HIGH.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Facial_I2V_LOW.safetensors?download=true" "loras" "iGoon_-_Blink_Facial_I2V_LOW.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Front_Doggystyle_I2V_HIGH.safetensors?download=true" "loras" "iGoon_-_Blink_Front_Doggystyle_I2V_HIGH.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Front_Doggystyle_I2V_LOW.safetensors?download=true" "loras" "iGoon_-_Blink_Front_Doggystyle_I2V_LOW.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Handjob_I2V_HIGH.safetensors?download=true" "loras" "iGoon_-_Blink_Handjob_I2V_HIGH.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Handjob_I2V_LOW.safetensors?download=true" "loras" "iGoon_-_Blink_Handjob_I2V_LOW.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon_Blink_Missionary_I2V_HIGH%20v2.safetensors?download=true" "loras" "iGoon_Blink_Missionary_I2V_HIGH_v2.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Missionary_I2V_LOW%20v2.safetensors?download=true" "loras" "iGoon_-_Blink_Missionary_I2V_LOW_v2.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon_Blink_Titjob_I2V_HIGH.safetensors?download=true" "loras" "iGoon_Blink_Titjob_I2V_HIGH.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon_Blink_Titjob_I2V_LOW.safetensors?download=true" "loras" "iGoon_Blink_Titjob_I2V_LOW.safetensors"
 
-echo "Downloading mql_casting_sex_spoon LOW..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/mql_casting_sex_spoon_wan22_i2v_v1_low_noise.safetensors?download=true" \
-  "loras" \
-  "mql_casting_sex_spoon_wan22_i2v_v1_low_noise.safetensors"
-
-echo "Downloading Blink_Squatting_Cowgirl HIGH..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/Blink_Squatting_Cowgirl_Position_I2V_HIGH.safetensors?download=true" \
-  "loras" \
-  "Blink_Squatting_Cowgirl_Position_I2V_HIGH.safetensors"
-
-echo "Downloading Blink_Squatting_Cowgirl LOW..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/Blink_Squatting_Cowgirl_Position_I2V_LOW.safetensors?download=true" \
-  "loras" \
-  "Blink_Squatting_Cowgirl_Position_I2V_LOW.safetensors"
-
-echo "Downloading genitals_helper..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/genitals_helper_v1.0_e219.safetensors?download=true" \
-  "loras" \
-  "genitals_helper_v1.0_e219.safetensors"
-
-echo "Downloading DR34ML4Y HIGH..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/DR34ML4Y_I2V_14B_HIGH.safetensors?download=true" \
-  "loras" \
-  "DR34ML4Y_I2V_14B_HIGH.safetensors"
-
-echo "Downloading DR34ML4Y LOW..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/DR34ML4Y_I2V_14B_LOW.safetensors?download=true" \
-  "loras" \
-  "DR34ML4Y_I2V_14B_LOW.safetensors"
-
-echo "Downloading Orgasm HIGH..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/WAN-2.2-I2V-Orgasm-HIGH-v1.safetensors?download=true" \
-  "loras" \
-  "WAN-2.2-I2V-Orgasm-HIGH-v1.safetensors"
-
-echo "Downloading Orgasm LOW..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/WAN-2.2-I2V-Orgasm-LOW-v1.safetensors?download=true" \
-  "loras" \
-  "WAN-2.2-I2V-Orgasm-LOW-v1.safetensors"
-
-echo "Downloading Blink_Back_Doggystyle HIGH..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Back_Doggystyle_HIGH.safetensors?download=true" \
-  "loras" \
-  "iGoon_-_Blink_Back_Doggystyle_HIGH.safetensors"
-
-echo "Downloading Blink_Back_Doggystyle LOW..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Back_Doggystyle_LOW.safetensors?download=true" \
-  "loras" \
-  "iGoon_-_Blink_Back_Doggystyle_LOW.safetensors"
-
-echo "Downloading Blink_Blowjob HIGH..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGOON_Blink_Blowjob_I2V_HIGH.safetensors?download=true" \
-  "loras" \
-  "iGOON_Blink_Blowjob_I2V_HIGH.safetensors"
-
-echo "Downloading Blink_Blowjob LOW..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGOON_Blink_Blowjob_I2V_LOW.safetensors?download=true" \
-  "loras" \
-  "iGOON_Blink_Blowjob_I2V_LOW.safetensors"
-
-echo "Downloading Blink_Facial HIGH..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Facial_I2V_HIGH.safetensors?download=true" \
-  "loras" \
-  "iGoon_-_Blink_Facial_I2V_HIGH.safetensors"
-
-echo "Downloading Blink_Facial LOW..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Facial_I2V_LOW.safetensors?download=true" \
-  "loras" \
-  "iGoon_-_Blink_Facial_I2V_LOW.safetensors"
-
-echo "Downloading Blink_Front_Doggystyle HIGH..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Front_Doggystyle_I2V_HIGH.safetensors?download=true" \
-  "loras" \
-  "iGoon_-_Blink_Front_Doggystyle_I2V_HIGH.safetensors"
-
-echo "Downloading Blink_Front_Doggystyle LOW..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Front_Doggystyle_I2V_LOW.safetensors?download=true" \
-  "loras" \
-  "iGoon_-_Blink_Front_Doggystyle_I2V_LOW.safetensors"
-
-echo "Downloading Blink_Handjob HIGH..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Handjob_I2V_HIGH.safetensors?download=true" \
-  "loras" \
-  "iGoon_-_Blink_Handjob_I2V_HIGH.safetensors"
-
-echo "Downloading Blink_Handjob LOW..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Handjob_I2V_LOW.safetensors?download=true" \
-  "loras" \
-  "iGoon_-_Blink_Handjob_I2V_LOW.safetensors"
-
-echo "Downloading Blink_Missionary HIGH v2..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon_Blink_Missionary_I2V_HIGH%20v2.safetensors?download=true" \
-  "loras" \
-  "iGoon_Blink_Missionary_I2V_HIGH_v2.safetensors"
-
-echo "Downloading Blink_Missionary LOW v2..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20Blink_Missionary_I2V_LOW%20v2.safetensors?download=true" \
-  "loras" \
-  "iGoon_-_Blink_Missionary_I2V_LOW_v2.safetensors"
-
-echo "Downloading Blink_Titjob HIGH..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon_Blink_Titjob_I2V_HIGH.safetensors?download=true" \
-  "loras" \
-  "iGoon_Blink_Titjob_I2V_HIGH.safetensors"
-
-echo "Downloading Blink_Titjob LOW..."
-download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon_Blink_Titjob_I2V_LOW.safetensors?download=true" \
-  "loras" \
-  "iGoon_Blink_Titjob_I2V_LOW.safetensors"
 
 echo ""
-if [ "$DOWNLOADER" == "aria2c" ]; then
-    echo "All downloads started in parallel..."
-else
-    echo "Downloads started (sequential with wget)..."
-    echo "This will take longer. Install aria2c for faster parallel downloads:"
-    echo "  apt install -y aria2"
-fi
-
+echo "All downloads started in parallel with aria2c..."
 echo "Waiting for all downloads to complete..."
 wait
 
@@ -280,10 +159,4 @@ ls -lh upscale_models/ 2>/dev/null || echo "Not found yet"
 echo ""
 echo "=========================================="
 echo "Download Complete!"
-echo "=========================================="
-echo ""
-echo "Downloaded: QuantStack Official (A14B)"
-echo ""
-echo "Total Size: ~32GB + Additional LoRAs: ~10GB"
-echo "Grand Total: ~42GB"
 echo "=========================================="
