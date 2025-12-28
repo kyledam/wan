@@ -19,16 +19,27 @@ echo "System Python version: $(python3 --version)"
 # Set up workspace
 mkdir -p /workspace && cd /workspace
 
-# Clone ComfyUI if not exists
-if [ ! -d "ComfyUI" ]; then
-    echo "Cloning ComfyUI..."
-    git clone https://github.com/comfyanonymous/ComfyUI.git
+# --- FIX CONFLICT VỚI SCRIPT DOWNLOAD ---
+# Thay vì git clone (sẽ lỗi nếu folder đã có), ta dùng git init
+if [ ! -d "ComfyUI/.git" ]; then
+    echo "ComfyUI folder found (created by download script) but not a git repo. Initializing..."
+    
+    # Tạo folder nếu chưa có
+    mkdir -p ComfyUI
+    cd ComfyUI
+    
+    # Khởi tạo git và kéo code về
+    git init
+    git remote add origin https://github.com/comfyanonymous/ComfyUI.git
+    git fetch origin
+    git checkout -t origin/master
 else
-    echo "ComfyUI already exists, updating..."
-    cd ComfyUI && git pull && cd ..
+    echo "ComfyUI already exists and is a git repo, updating..."
+    cd ComfyUI && git pull
 fi
 
-cd ComfyUI
+# Đảm bảo đang ở trong folder ComfyUI cho các bước sau
+cd /workspace/ComfyUI
 
 # Create and activate Python 3.12 virtual environment
 if [ ! -d "venv" ]; then
