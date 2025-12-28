@@ -139,6 +139,9 @@ download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon%20-%20
 download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon_Blink_Titjob_I2V_HIGH.safetensors?download=true" "loras" "iGoon_Blink_Titjob_I2V_HIGH.safetensors"
 download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/iGoon_Blink_Titjob_I2V_LOW.safetensors?download=true" "loras" "iGoon_Blink_Titjob_I2V_LOW.safetensors"
 
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/mql_casting_sex_doggy_kneel_diagonally_behind_vagina_wan22_i2v_v1_high_noise.safetensors" "loras" "mql_casting_sex_doggy_kneel_diagonally_behind_vagina_wan22_i2v_v1_high_noise.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/mql_casting_sex_doggy_kneel_diagonally_behind_vagina_wan22_i2v_v1_low_noise.safetensors" "loras" "mql_casting_sex_doggy_kneel_diagonally_behind_vagina_wan22_i2v_v1_low_noise.safetensors"
+
 echo ""
 echo "All downloads started in parallel with aria2c..."
 echo "Waiting for all downloads to complete..."
@@ -165,3 +168,4 @@ echo ""
 echo "=========================================="
 echo "Download Complete! (ALL FILES)"
 echo "=========================================="
+
