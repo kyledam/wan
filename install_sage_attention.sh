@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "=========================================="
-echo "ComfyUI + SageAttention 2.2 Setup"
+echo "ComfyUI + SageAttention 2.2 Setup (FIXED GIT)"
 echo "For RTX 5070 Ti + CUDA 12.8 + PyTorch 2.8"
 echo "Ubuntu 24.04 + Python 3.12"
 echo "=========================================="
@@ -19,23 +19,34 @@ echo "System Python version: $(python3 --version)"
 # Set up workspace
 mkdir -p /workspace && cd /workspace
 
-# --- FIX CONFLICT VỚI SCRIPT DOWNLOAD ---
-# Thay vì git clone (sẽ lỗi nếu folder đã có), ta dùng git init
+# --- FIX LOGIC GIT (QUAN TRỌNG) ---
+# Kiểm tra xem folder ComfyUI đã là git repo chưa
 if [ ! -d "ComfyUI/.git" ]; then
     echo "ComfyUI folder found (created by download script) but not a git repo. Initializing..."
     
-    # Tạo folder nếu chưa có
+    # Tạo folder nếu chưa có (dù script download đã tạo rồi, cứ chạy cho chắc)
     mkdir -p ComfyUI
     cd ComfyUI
     
-    # Khởi tạo git và kéo code về
+    # Init git thủ công để tránh lỗi "Destination path not an empty directory"
     git init
+    git remote remove origin 2>/dev/null || true # Xóa origin cũ nếu lỗi
     git remote add origin https://github.com/comfyanonymous/ComfyUI.git
     git fetch origin
-    git checkout -t origin/master
+    
+    # Checkout ép buộc về master
+    git checkout -B master origin/master
+    git branch --set-upstream-to=origin/master master
 else
     echo "ComfyUI already exists and is a git repo, updating..."
-    cd ComfyUI && git pull
+    cd ComfyUI
+    
+    # --- FIX LỖI CỦA MÀY TẠI ĐÂY ---
+    # Thay vì 'git pull' trống không, ta set upstream và pull rõ ràng
+    git remote set-url origin https://github.com/comfyanonymous/ComfyUI.git 2>/dev/null
+    git fetch origin
+    # Dòng này sửa lỗi "no tracking information":
+    git pull origin master
 fi
 
 # Đảm bảo đang ở trong folder ComfyUI cho các bước sau
@@ -58,17 +69,15 @@ echo "=========================================="
 echo "Installing PyTorch 2.8.0 + CUDA 12.8"
 echo "=========================================="
 
-# Install PyTorch 2.8.0 with CUDA 12.8 (matching your system)
+# Install PyTorch 2.8.0 with CUDA 12.8
 pip install torch==2.8.0 torchvision==0.23.0 torchaudio==2.8.0 --index-url https://download.pytorch.org/whl/cu128
 
 echo "=========================================="
 echo "Installing Triton + SageAttention 2.2"
 echo "=========================================="
 
-# Install Triton (nightly for RTX 50xx Blackwell support)
+# Install Triton
 pip install triton --pre
-
-# Install packaging
 pip install packaging
 
 # Download and install SageAttention 2.2
@@ -106,7 +115,6 @@ echo "=========================================="
 
 cd /workspace/ComfyUI
 
-# Backup existing custom_nodes if exists
 if [ -d "custom_nodes" ]; then
     echo "Backing up existing custom_nodes..."
     mv custom_nodes custom_nodes.backup.$(date +%Y%m%d_%H%M%S)
@@ -138,13 +146,10 @@ for dir in */; do
     fi
 done
 
-# Install common dependencies
 echo "Installing common dependencies..."
 pip install soundfile librosa pydub gitpython
 
 cd /workspace/ComfyUI
-
-# Clean up
 rm -f custom_nodes_backup.tar.gz
 
 echo ""
@@ -174,10 +179,7 @@ environment=PATH="/workspace/ComfyUI/venv/bin:%(ENV_PATH)s",VIRTUAL_ENV="/worksp
 stopwaitsecs=60
 SUPEOF
 
-# Create log directory
 mkdir -p /var/log/supervisor
-
-# Reload supervisor
 supervisorctl reread
 supervisorctl update
 
@@ -194,46 +196,13 @@ echo "- GPU: RTX 5070 Ti (16GB)"
 echo "- SageAttention: 2.2.0"
 echo "- Supervisor: Installed & Configured"
 echo ""
-echo "Custom Nodes: Restored from kyledam/wan_lora backup"
-echo ""
-echo "=========================================="
 echo "Starting ComfyUI with Supervisor..."
-echo "=========================================="
 
 supervisorctl start comfyui
 
 sleep 3
-
 echo ""
 echo "ComfyUI Status:"
 supervisorctl status comfyui
 echo ""
-echo "=========================================="
-echo "Access ComfyUI:"
-echo "=========================================="
-echo ""
-echo "URL: http://YOUR_IP:3001"
-echo ""
-echo "Supervisor Commands:"
-echo "- Check status:  supervisorctl status comfyui"
-echo "- Restart:       supervisorctl restart comfyui"
-echo "- Stop:          supervisorctl stop comfyui"
-echo "- View logs:     tail -f /var/log/supervisor/comfyui.log"
-echo ""
-echo "=========================================="
-echo "Next Steps:"
-echo "=========================================="
-echo ""
-echo "1. Download models:"
-echo "   cd /workspace/ComfyUI/models"
-echo "   ./download_wan22_models.sh"
-echo ""
-echo "2. ComfyUI will auto-start and auto-restart"
-echo "   No manual start needed!"
-echo ""
-echo "3. Load workflow and configure:"
-echo "   - SageAttention mode: sageattn_qk_int8_pv_fp8_cuda"
-echo "   - Resolution: 720x480 or 640x384"
-echo "   - Frames: 49-81"
-echo ""
-echo "=========================================="
+echo "ACCESS URL: http://YOUR_IP:3001"
