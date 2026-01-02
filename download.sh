@@ -66,6 +66,12 @@ download_file \
   "text_encoders" \
   "umt5_xxl_fp8_e4m3fn_scaled.safetensors"
 
+echo "Downloading Text Encoder FP8 (~5GB)..."
+download_file \
+  "https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" \
+  "text_encoders" \
+  "nsfw_wan_umt5-xxl_fp8_scaled.safetensors"
+
 echo "Downloading Wan2.1 Lightning LoRA (~1.2GB)..."
 download_file \
   "https://huggingface.co/lightx2v/Wan2.1-I2V-14B-480P-StepDistill-CfgDistill-Lightx2v/resolve/main/loras/Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors?download=true" \
@@ -168,4 +174,5 @@ echo ""
 echo "=========================================="
 echo "Download Complete! (ALL FILES)"
 echo "=========================================="
+
 
