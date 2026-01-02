@@ -60,11 +60,24 @@ download_file \
   "diffusion_models/wan22_quantstack_a14b" \
   "Wan2.2-I2V-A14B-LowNoise-Q8_0.gguf"
 
+#echo "Downloading Text Encoder FP8 (~5GB)..."
+#download_file \
+#  "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors?download=true" \
+#  "text_encoders" \
+#  "umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+
 echo "Downloading Text Encoder FP8 (~5GB)..."
 download_file \
-  "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors?download=true" \
+  "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/umt5-xxl-enc-bf16.safetensors" \
   "text_encoders" \
-  "umt5_xxl_fp8_e4m3fn_scaled.safetensors"
+  "umt5-xxl-enc-bf16.safetensors"
+
+#echo "Downloading Text Encoder FP8 (~5GB)..."
+#download_file \
+#  "https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors" \
+#  "text_encoders" \
+#  "nsfw_wan_umt5-xxl_fp8_scaled.safetensors"
+
 
 echo "Downloading Text Encoder FP8 (~5GB)..."
 download_file \
@@ -72,17 +85,30 @@ download_file \
   "text_encoders" \
   "nsfw_wan_umt5-xxl_fp8_scaled.safetensors"
 
-echo "Downloading Wan2.1 Lightning LoRA (~1.2GB)..."
-download_file \
-  "https://huggingface.co/lightx2v/Wan2.1-I2V-14B-480P-StepDistill-CfgDistill-Lightx2v/resolve/main/loras/Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors?download=true" \
-  "loras" \
-  "Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors"
+
+#echo "Downloading Wan2.1 Lightning LoRA (~1.2GB)..."
+#download_file \
+ # "https://huggingface.co/lightx2v/Wan2.1-I2V-14B-480P-StepDistill-CfgDistill-Lightx2v/resolve/main/loras/Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors?download=true" \
+#  "loras" \
+#  "Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors"
 
 echo "Downloading Lightx2v I2V 480p LoRA rank128 (~2.4GB)..."
 download_file \
   "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors?download=true" \
   "loras" \
   "lightx2v_I2V_14B_480p_cfg_step_distill_rank128_bf16.safetensors"
+
+echo "Downloading Lightx2v I2V 480p LoRA rank128 (~2.4GB)..."
+download_file \
+  "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/LoRAs/Wan22-Lightning/old/Wan2.2-Lightning_I2V-A14B-4steps-lora_HIGH_fp16.safetensors" \
+  "loras" \
+  "Wan2.2-Lightning_I2V-A14B-4steps-lora_HIGH_fp16.safetensors"
+
+echo "Downloading Lightx2v I2V 480p LoRA rank128 (~2.4GB)..."
+download_file \
+  "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/LoRAs/Wan22-Lightning/old/Wan2.2-Lightning_I2V-A14B-4steps-lora_LOW_fp16.safetensors" \
+  "loras" \
+  "Wan2.2-Lightning_I2V-A14B-4steps-lora_LOW_fp16.safetensors"
 
 MODELS_FOLDER="diffusion_models/wan22_quantstack_a14b"
 
@@ -174,5 +200,6 @@ echo ""
 echo "=========================================="
 echo "Download Complete! (ALL FILES)"
 echo "=========================================="
+
 
 
