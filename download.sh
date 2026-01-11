@@ -50,15 +50,15 @@ echo "=========================================="
 
 echo "Downloading QuantStack High Noise (~13GB)..."
 download_file \
-  "https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/HighNoise/Wan2.2-I2V-A14B-HighNoise-Q8_0.gguf?download=true" \
-  "diffusion_models/wan22_quantstack_a14b" \
-  "Wan2.2-I2V-A14B-HighNoise-Q8_0.gguf"
+  "https://huggingface.co/kyledam/wan_lora/resolve/main/wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8H.gguf" \
+  "diffusion_models" \
+  "wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8H.gguf"
 
 echo "Downloading QuantStack Low Noise (~13GB)..."
 download_file \
-  "https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/LowNoise/Wan2.2-I2V-A14B-LowNoise-Q8_0.gguf?download=true" \
-  "diffusion_models/wan22_quantstack_a14b" \
-  "Wan2.2-I2V-A14B-LowNoise-Q8_0.gguf"
+  "https://huggingface.co/kyledam/wan_lora/resolve/main/wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8L.gguf" \
+  "diffusion_models" \
+  "wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8L.gguf"
 
 #echo "Downloading Text Encoder FP8 (~5GB)..."
 #download_file \
@@ -86,11 +86,11 @@ download_file \
   "nsfw_wan_umt5-xxl_fp8_scaled.safetensors"
 
 
-#echo "Downloading Wan2.1 Lightning LoRA (~1.2GB)..."
-#download_file \
- # "https://huggingface.co/lightx2v/Wan2.1-I2V-14B-480P-StepDistill-CfgDistill-Lightx2v/resolve/main/loras/Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors?download=true" \
-#  "loras" \
-#  "Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors"
+echo "Downloading Wan2.1 Lightning LoRA (~1.2GB)..."
+download_file \
+  "https://huggingface.co/lightx2v/Wan2.1-I2V-14B-480P-StepDistill-CfgDistill-Lightx2v/resolve/main/loras/Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors?download=true" \
+  "loras" \
+  "Wan21_I2V_14B_lightx2v_cfg_step_distill_lora_rank64.safetensors"
 
 echo "Downloading Lightx2v I2V 480p LoRA rank128 (~2.4GB)..."
 download_file \
@@ -212,6 +212,7 @@ echo ""
 echo "=========================================="
 echo "Download Complete! (ALL FILES)"
 echo "=========================================="
+
 
 
 
