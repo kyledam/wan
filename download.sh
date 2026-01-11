@@ -110,6 +110,18 @@ download_file \
   "loras" \
   "Wan2.2-Lightning_I2V-A14B-4steps-lora_LOW_fp16.safetensors"
 
+echo "Downloading Lightx2v I2V 480p LoRA rank128 (~2.4GB)..."
+download_file \
+  "https://huggingface.co/vita-video-gen/svi-model/resolve/main/version-2.0/SVI_Wan2.2-I2V-A14B_high_noise_lora_v2.0_pro.safetensors" \
+  "loras" \
+  "SVI_Wan2.2-I2V-A14B_high_noise_lora_v2.0_pro.safetensors"
+
+echo "Downloading Lightx2v I2V 480p LoRA rank128 (~2.4GB)..."
+download_file \
+  "https://huggingface.co/vita-video-gen/svi-model/resolve/main/version-2.0/SVI_Wan2.2-I2V-A14B_low_noise_lora_v2.0_pro.safetensors" \
+  "loras" \
+  "SVI_Wan2.2-I2V-A14B_low_noise_lora_v2.0_pro.safetensors"
+
 MODELS_FOLDER="diffusion_models/wan22_quantstack_a14b"
 
 # Common downloads
@@ -200,6 +212,7 @@ echo ""
 echo "=========================================="
 echo "Download Complete! (ALL FILES)"
 echo "=========================================="
+
 
 
 
