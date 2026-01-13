@@ -68,9 +68,9 @@ download_file \
 
 echo "Downloading Text Encoder FP8 (~5GB)..."
 download_file \
-  "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/umt5-xxl-enc-bf16.safetensors" \
+  "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp16.safetensors" \
   "text_encoders" \
-  "umt5-xxl-enc-bf16.safetensors"
+  "umt5_xxl_fp16.safetensors"
 
 #echo "Downloading Text Encoder FP8 (~5GB)..."
 #download_file \
@@ -212,6 +212,7 @@ echo ""
 echo "=========================================="
 echo "Download Complete! (ALL FILES)"
 echo "=========================================="
+
 
 
 
