@@ -99,7 +99,7 @@ pip install soundfile librosa pydub gitpython
 echo "Setting up Supervisor..."
 cat > /etc/supervisor/conf.d/comfyui.conf << 'SUPEOF'
 [program:comfyui]
-command=/workspace/ComfyUI/venv/bin/python /workspace/ComfyUI/main.py --listen 0.0.0.0 --port 3001 --enable-cors-header --reserve-vram 2
+command=/workspace/ComfyUI/venv/bin/python /workspace/ComfyUI/main.py --listen 0.0.0.0 --port 3001 --enable-cors-header
 directory=/workspace/ComfyUI
 user=root
 autostart=true
@@ -120,6 +120,7 @@ supervisorctl update
 supervisorctl start comfyui
 
 echo "INSTALLATION COMPLETE. Access at http://YOUR_IP:3001"
+
 
 
 
