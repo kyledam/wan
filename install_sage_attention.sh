@@ -82,7 +82,7 @@ echo "Downloading Custom Nodes..."
 if [ -d "custom_nodes" ]; then
     mv custom_nodes custom_nodes.backup.$(date +%Y%m%d_%H%M%S)
 fi
-wget -O custom_nodes_backup.tar.gz "https://huggingface.co/kyledam/wan_lora/resolve/main/custom_nodes_backup_v4.tar.gz"
+wget -O custom_nodes_backup.tar.gz "https://huggingface.co/kyledam/wan_lora/resolve/main/custom_nodes_backup_v5.tar.gz"
 tar -xzf custom_nodes_backup.tar.gz
 rm custom_nodes_backup.tar.gz
 
@@ -120,6 +120,7 @@ supervisorctl update
 supervisorctl start comfyui
 
 echo "INSTALLATION COMPLETE. Access at http://YOUR_IP:3001"
+
 
 
 
