@@ -61,9 +61,9 @@ download_file \
   "Wan2.2-I2V-A14B-LowNoise-Q8_0.gguf"
   
 download_file \
-  "https://huggingface.co/theunlikely/Qwen-Image-Edit-2509/resolve/main/qwen_image_edit_2509_fp8_e4m3fn.safetensors" \
+  "https://huggingface.co/1038lab/Qwen-Image-Edit-2511-FP8/resolve/main/Qwen-Image-Edit-2511-FP8_e4m3fn.safetensors" \
   "diffusion_models" \
-  "qwen_image_edit_2509_fp8_e4m3fn.safetensors"
+  "Qwen-Image-Edit-2511-FP8_e4m3fn.safetensors"
 
 #echo "Downloading Text Encoder FP8 (~5GB)..."
 #download_file \
@@ -158,8 +158,8 @@ echo "=========================================="
 echo "Downloading Additional LoRAs (kyledam)"
 echo "=========================================="
 
-download_file "https://huggingface.co/jagat334433/beru_custom/resolve/main/consistence_edit_v2.safetensors" "loras" "consistence_edit_v2.safetensors"
-download_file "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Edit-2509/Qwen-Image-Edit-2509-Lightning-8steps-V1.0-bf16.safetensors" "loras" "Qwen-Image-Edit-2509-Lightning-8steps-V1.0-bf16.safetensors"
+download_file "https://huggingface.co/kyledam/wan_lora/resolve/main/qe2511_consis_alpha_patched.safetensors" "loras" "qe2511_consis_alpha_patched.safetensors"
+download_file "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/main/Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors" "loras" "Qwen-Image-Edit-2511-Lightning-8steps-V1.0-bf16.safetensors"
 
 echo ""
 echo "All downloads started in parallel with aria2c..."
@@ -187,6 +187,7 @@ echo ""
 echo "=========================================="
 echo "Download Complete! (ALL FILES)"
 echo "=========================================="
+
 
 
 
