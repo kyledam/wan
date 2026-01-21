@@ -63,7 +63,7 @@ download_file \
 download_file \
   "https://huggingface.co/1038lab/Qwen-Image-Edit-2511-FP8/resolve/main/Qwen-Image-Edit-2511-FP8_e4m3fn.safetensors" \
   "diffusion_models" \
-  "Qwen-Image-Edit-2511-FP8_e4m3fn.safetensors"
+  "qwen_image_edit_2511_fp8_e4m3fn.safetensors"
 
 #echo "Downloading Text Encoder FP8 (~5GB)..."
 #download_file \
@@ -187,6 +187,7 @@ echo ""
 echo "=========================================="
 echo "Download Complete! (ALL FILES)"
 echo "=========================================="
+
 
 
 
