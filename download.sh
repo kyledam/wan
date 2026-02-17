@@ -62,15 +62,27 @@ download_file \
 
 echo "Downloading QuantStack High Noise (~13GB)..."
 download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8H.gguf" \
+  "https://huggingface.co/BigDannyPt/Wan-2.2-Remix-GGUF/resolve/main/I2V/v2.1/High/wan22RemixT2VI2V_i2vHighV21-Q8_0.gguf" \
   "diffusion_models" \
-  "wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8H.gguf"
+  "wan22RemixT2VI2V_i2vHighV21-Q8_0.gguf"
 
 echo "Downloading QuantStack Low Noise (~13GB)..."
 download_file \
-  "https://huggingface.co/kyledam/wan_lora/resolve/main/wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8L.gguf" \
+  "https://huggingface.co/BigDannyPt/Wan-2.2-Remix-GGUF/resolve/main/I2V/v2.1/Low/wan22RemixT2VI2V_i2vLowV21-Q8_0.gguf" \
   "diffusion_models" \
-  "wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8L.gguf"
+  "wan22RemixT2VI2V_i2vLowV21-Q8_0.gguf"
+
+#echo "Downloading QuantStack High Noise (~13GB)..."
+#download_file \
+#  "https://huggingface.co/kyledam/wan_lora/resolve/main/wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8H.gguf" \
+#  "diffusion_models" \
+#  "wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8H.gguf"
+
+#echo "Downloading QuantStack Low Noise (~13GB)..."
+#download_file \
+#  "https://huggingface.co/kyledam/wan_lora/resolve/main/wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8L.gguf" \
+#  "diffusion_models" \
+#  "wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8L.gguf"
 
 #echo "Downloading Text Encoder FP8 (~5GB)..."
 #download_file \
@@ -224,6 +236,7 @@ echo ""
 echo "=========================================="
 echo "Download Complete! (ALL FILES)"
 echo "=========================================="
+
 
 
 
