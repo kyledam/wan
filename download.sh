@@ -50,6 +50,18 @@ echo "=========================================="
 
 echo "Downloading QuantStack High Noise (~13GB)..."
 download_file \
+  "https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/HighNoise/Wan2.2-I2V-A14B-HighNoise-Q8_0.gguf" \
+  "diffusion_models" \
+  "Wan2.2-I2V-A14B-HighNoise-Q8_0.gguf"
+
+echo "Downloading QuantStack High Noise (~13GB)..."
+download_file \
+  "https://huggingface.co/QuantStack/Wan2.2-I2V-A14B-GGUF/resolve/main/LowNoise/Wan2.2-I2V-A14B-LowNoise-Q8_0.gguf" \
+  "diffusion_models" \
+  "Wan2.2-I2V-A14B-LowNoise-Q8_0.gguf"
+
+echo "Downloading QuantStack High Noise (~13GB)..."
+download_file \
   "https://huggingface.co/kyledam/wan_lora/resolve/main/wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8H.gguf" \
   "diffusion_models" \
   "wan22EnhancedNSFWCameraPrompt_nsfwFASTMOVEV2Q8H.gguf"
@@ -212,6 +224,7 @@ echo ""
 echo "=========================================="
 echo "Download Complete! (ALL FILES)"
 echo "=========================================="
+
 
 
 
